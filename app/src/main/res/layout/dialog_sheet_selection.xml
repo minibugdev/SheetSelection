@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical">
+
+	<TextView
+		android:id="@+id/textViewTitle"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:padding="16dp"
+		tools:text="@tools:sample/lorem" />
+
+	<androidx.recyclerview.widget.RecyclerView
+		android:id="@+id/recyclerViewSelectionItems"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+		tools:itemCount="10"
+		tools:listitem="@layout/row_selection_item" />
+</LinearLayout>
