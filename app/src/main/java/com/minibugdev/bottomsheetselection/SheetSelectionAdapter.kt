@@ -45,8 +45,8 @@ class SheetSelectionAdapter(private val items: List<Item>,
 	}
 
 	@Parcelize
-	data class Item(val value: String,
-	                val key: String,
+	data class Item(val key: String,
+	                val value: String,
 	                @DrawableRes val icon: Int? = null) : Parcelable
 
 	interface OnItemSelectedListener {

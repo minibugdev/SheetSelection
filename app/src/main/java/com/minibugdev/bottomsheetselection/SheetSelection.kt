@@ -5,10 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.dialog_sheet_selection.*
 
-class SheetSelection : BottomSheetDialogFragment() {
+class SheetSelection private constructor() : BottomSheetDialogFragment() {
 
 	private var onItemClickListener: SheetSelectionAdapter.OnItemSelectedListener? = null
 
@@ -40,22 +43,46 @@ class SheetSelection : BottomSheetDialogFragment() {
 		}
 	}
 
+	class Builder {
+		private val fragmentManager: FragmentManager?
+
+		private var title: String? = null
+		private var items: List<SheetSelectionAdapter.Item> = emptyList()
+		private var selectedPosition: Int = NO_SELECT
+
+		constructor(activity: FragmentActivity) {
+			this.fragmentManager = activity.supportFragmentManager
+		}
+
+		constructor(fragment: Fragment) {
+			this.fragmentManager = fragment.fragmentManager
+		}
+
+		fun title(title: String) = apply { this.title = title }
+		fun items(items: List<SheetSelectionAdapter.Item>) = apply { this.items = items }
+		fun selectedPosition(selectedPosition: Int) = apply { this.selectedPosition = selectedPosition }
+
+		fun build() = SheetSelection().apply {
+			arguments = Bundle()
+				.apply {
+					putString(ARGS_TITLE, title)
+					putParcelableArrayList(ARGS_ITEMS, ArrayList(items))
+					putInt(ARGS_SELECTED_POSITION, selectedPosition)
+				}
+		}
+
+		fun show() {
+			fragmentManager?.let { manager ->
+				build().show(manager, "SheetSelection")
+			}
+		}
+	}
+
 	companion object {
 		const val NO_SELECT = -1
 
 		private const val ARGS_TITLE = "SheetSelection:ARGS_TITLE"
 		private const val ARGS_ITEMS = "SheetSelection:ARGS_ITEMS"
 		private const val ARGS_SELECTED_POSITION = "SheetSelection:ARGS_SELECTED_POSITION"
-
-		fun getInstance(title: String,
-		                items: List<SheetSelectionAdapter.Item>,
-		                selectedPosition: Int) = SheetSelection()
-			.apply {
-				arguments = Bundle().apply {
-					putString(ARGS_TITLE, title)
-					putParcelableArrayList(ARGS_ITEMS, ArrayList(items))
-					putInt(ARGS_SELECTED_POSITION, selectedPosition)
-				}
-			}
 	}
 }

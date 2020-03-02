@@ -20,9 +20,11 @@ class MainActivity : AppCompatActivity(), SheetSelectionAdapter.OnItemSelectedLi
 					SheetSelectionAdapter.Item("4", "Item #4", null)
 			)
 
-			SheetSelection
-				.getInstance("TITLE", items, SheetSelection.NO_SELECT)
-				.show(supportFragmentManager, "TAG")
+			SheetSelection.Builder(this)
+				.title("This is Title")
+				.items(items)
+				.selectedPosition(0)
+				.show()
 		}
 	}
 
