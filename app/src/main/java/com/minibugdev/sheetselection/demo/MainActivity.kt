@@ -8,7 +8,7 @@ import com.minibugdev.sheetselection.SheetSelection
 import com.minibugdev.sheetselection.SheetSelectionAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), SheetSelectionAdapter.OnItemSelectedListener {
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,16 +27,14 @@ class MainActivity : AppCompatActivity(), SheetSelectionAdapter.OnItemSelectedLi
                 .title("This is Title from Activity")
                 .items(items)
                 .selectedPosition(0)
+                .onItemClickListener { item, _ ->
+                    Toast.makeText(this@MainActivity, item.value, Toast.LENGTH_SHORT).show()
+                }
                 .show()
         }
 
         buttonFragment.setOnClickListener {
             startActivity(Intent(this, FragmentActivity::class.java))
         }
-    }
-
-    override fun onSelected(item: SheetSelectionAdapter.Item, position: Int) {
-        Toast.makeText(this, item.value, Toast.LENGTH_SHORT)
-            .show()
     }
 }

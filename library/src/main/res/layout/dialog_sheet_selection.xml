@@ -10,7 +10,7 @@
         android:id="@+id/textViewTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:padding="@dimen/ss_padding"
         tools:text="@tools:sample/lorem" />
 
     <androidx.recyclerview.widget.RecyclerView

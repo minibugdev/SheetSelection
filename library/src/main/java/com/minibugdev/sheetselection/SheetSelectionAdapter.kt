@@ -10,6 +10,8 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.parcel.Parcelize
 import kotlinx.android.synthetic.main.row_selection_item.*
 
+typealias OnItemSelectedListener = (item: SheetSelectionAdapter.Item, position: Int) -> Unit
+
 class SheetSelectionAdapter(
     private val items: List<Item>,
     private val selectedPosition: Int,
@@ -22,9 +24,7 @@ class SheetSelectionAdapter(
         return LayoutInflater.from(parent.context)
             .inflate(R.layout.row_selection_item, parent, false)
             .run {
-                ViewHolder(
-                    this
-                )
+                ViewHolder(this)
             }
     }
 
@@ -49,7 +49,7 @@ class SheetSelectionAdapter(
             textViewItem.text = item.value
 
             textViewItem.setOnClickListener {
-                onItemSelectedListener?.onSelected(item, position)
+                onItemSelectedListener?.invoke(item, position)
             }
         }
     }
@@ -60,8 +60,4 @@ class SheetSelectionAdapter(
         val value: String,
         @DrawableRes val icon: Int? = null
     ) : Parcelable
-
-    interface OnItemSelectedListener {
-        fun onSelected(item: Item, position: Int)
-    }
 }

@@ -10,7 +10,7 @@ import com.minibugdev.sheetselection.SheetSelection
 import com.minibugdev.sheetselection.SheetSelectionAdapter
 import kotlinx.android.synthetic.main.fragment_main.*
 
-class MainFragment : Fragment(), SheetSelectionAdapter.OnItemSelectedListener {
+class MainFragment : Fragment() {
 
     companion object {
         fun newInstance() = MainFragment()
@@ -35,16 +35,14 @@ class MainFragment : Fragment(), SheetSelectionAdapter.OnItemSelectedListener {
                 SheetSelectionAdapter.Item("4", "Item #4", null)
             )
 
-            SheetSelection.Builder(this)
+            SheetSelection.Builder(requireContext())
                 .title("This is Title from Fragment")
                 .items(items)
                 .selectedPosition(1)
+                .onItemClickListener { item, _ ->
+                    Toast.makeText(requireContext(), item.value, Toast.LENGTH_SHORT).show()
+                }
                 .show()
         }
-    }
-
-    override fun onSelected(item: SheetSelectionAdapter.Item, position: Int) {
-        Toast.makeText(requireContext(), item.value, Toast.LENGTH_SHORT)
-            .show()
     }
 }
