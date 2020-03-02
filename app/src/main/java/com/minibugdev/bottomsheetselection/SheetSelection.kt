@@ -1,6 +1,5 @@
 package com.minibugdev.bottomsheetselection
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +20,8 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
+		registerListener()
+
 		arguments?.let { args ->
 			textViewTitle.text = args.getString(ARGS_TITLE)
 			recyclerViewSelectionItems.adapter = SheetSelectionAdapter(
@@ -31,9 +32,13 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
 		}
 	}
 
-	override fun onAttach(context: Context) {
-		super.onAttach(context)
-		onItemClickListener = (context as? SheetSelectionAdapter.OnItemSelectedListener)
+	private fun registerListener() {
+		onItemClickListener = if (targetFragment != null) {
+			targetFragment as? SheetSelectionAdapter.OnItemSelectedListener
+		}
+		else {
+			activity as? SheetSelectionAdapter.OnItemSelectedListener
+		}
 	}
 
 	private val internalOnItemClickListener = object : SheetSelectionAdapter.OnItemSelectedListener {
@@ -44,18 +49,21 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
 	}
 
 	class Builder {
-		private val fragmentManager: FragmentManager?
+		private val manager: FragmentManager
+		private val target: Fragment?
 
 		private var title: String? = null
 		private var items: List<SheetSelectionAdapter.Item> = emptyList()
 		private var selectedPosition: Int = NO_SELECT
 
 		constructor(activity: FragmentActivity) {
-			this.fragmentManager = activity.supportFragmentManager
+			this.target = null
+			this.manager = activity.supportFragmentManager
 		}
 
 		constructor(fragment: Fragment) {
-			this.fragmentManager = fragment.fragmentManager
+			this.target = fragment
+			this.manager = fragment.requireFragmentManager()
 		}
 
 		fun title(title: String) = apply { this.title = title }
@@ -69,12 +77,11 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
 					putParcelableArrayList(ARGS_ITEMS, ArrayList(items))
 					putInt(ARGS_SELECTED_POSITION, selectedPosition)
 				}
+			setTargetFragment(target, 99)
 		}
 
 		fun show() {
-			fragmentManager?.let { manager ->
-				build().show(manager, "SheetSelection")
-			}
+			build().show(manager, "SheetSelection:TAG")
 		}
 	}
 

@@ -1,5 +1,6 @@
 package com.minibugdev.bottomsheetselection
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -11,7 +12,7 @@ class MainActivity : AppCompatActivity(), SheetSelectionAdapter.OnItemSelectedLi
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_main)
 
-		button.setOnClickListener {
+		buttonShowSheetSelection.setOnClickListener {
 
 			val items = listOf(
 					SheetSelectionAdapter.Item("1", "Item #1", null),
@@ -21,10 +22,14 @@ class MainActivity : AppCompatActivity(), SheetSelectionAdapter.OnItemSelectedLi
 			)
 
 			SheetSelection.Builder(this)
-				.title("This is Title")
+				.title("This is Title from Activity")
 				.items(items)
 				.selectedPosition(0)
 				.show()
+		}
+
+		buttonFragment.setOnClickListener {
+			startActivity(Intent(this, FragmentActivity::class.java))
 		}
 	}
 
