@@ -1,4 +1,4 @@
-package com.minibugdev.bottomsheetselection
+package com.minibugdev.bottomsheetselection.demo
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.minibugdev.bottomsheetselection.SheetSelection
+import com.minibugdev.bottomsheetselection.SheetSelectionAdapter
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : Fragment(), SheetSelectionAdapter.OnItemSelectedListener {

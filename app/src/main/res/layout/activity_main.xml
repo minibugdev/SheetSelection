@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:gravity="center"
-	android:orientation="vertical"
-	android:padding="16dp">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-	<TextView
-		android:id="@+id/textview"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginBottom="48dp"
-		android:gravity="center"
-		android:text="Hello World!" />
+    <TextView
+        android:id="@+id/textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp"
+        android:gravity="center"
+        android:text="Hello World!" />
 
-	<com.google.android.material.button.MaterialButton
-		android:id="@+id/buttonShowSheetSelection"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:text="Show Sheet Selection" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonShowSheetSelection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Show Sheet Selection" />
 
-	<com.google.android.material.button.MaterialButton
-		android:id="@+id/buttonFragment"
-		style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:text="Go to Fragment" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonFragment"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Go to Fragment" />
 </LinearLayout>
