@@ -1,4 +1,4 @@
-package com.minibugdev.bottomsheetselection
+package com.minibugdev.sheetselection
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,14 +28,15 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
 
         arguments?.let { args ->
             textViewTitle.text = args.getString(ARGS_TITLE)
-            recyclerViewSelectionItems.adapter = SheetSelectionAdapter(
-                items = args.getParcelableArrayList(ARGS_ITEMS) ?: emptyList(),
-                selectedPosition = args.getInt(
-                    ARGS_SELECTED_POSITION,
-                    NO_SELECT
-                ),
-                onItemSelectedListener = internalOnItemClickListener
-            )
+            recyclerViewSelectionItems.adapter =
+                SheetSelectionAdapter(
+                    items = args.getParcelableArrayList(ARGS_ITEMS) ?: emptyList(),
+                    selectedPosition = args.getInt(
+                        ARGS_SELECTED_POSITION,
+                        NO_SELECT
+                    ),
+                    onItemSelectedListener = internalOnItemClickListener
+                )
         }
     }
 

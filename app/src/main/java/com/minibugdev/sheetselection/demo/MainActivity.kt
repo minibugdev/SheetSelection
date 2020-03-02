@@ -1,11 +1,11 @@
-package com.minibugdev.bottomsheetselection.demo
+package com.minibugdev.sheetselection.demo
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.minibugdev.bottomsheetselection.SheetSelection
-import com.minibugdev.bottomsheetselection.SheetSelectionAdapter
+import com.minibugdev.sheetselection.SheetSelection
+import com.minibugdev.sheetselection.SheetSelectionAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), SheetSelectionAdapter.OnItemSelectedListener {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.minibugdev.bottomsheetselection.demo">
+    package="com.minibugdev.sheetselection.demo">
 
     <application
         android:allowBackup="true"
@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="com.minibugdev.sheetselection.demo.MainActivity"
             android:label="Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".FragmentActivity"
+            android:name="com.minibugdev.sheetselection.demo.FragmentActivity"
             android:label="Fragment"
             android:theme="@style/AppTheme.Fragment" />
     </application>

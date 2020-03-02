@@ -1,4 +1,4 @@
-package com.minibugdev.bottomsheetselection
+package com.minibugdev.sheetselection
 
 import android.os.Parcelable
 import android.view.LayoutInflater

@@ -1,4 +1,4 @@
-package com.minibugdev.bottomsheetselection.demo
+package com.minibugdev.sheetselection.demo
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
