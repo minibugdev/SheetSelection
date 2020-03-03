@@ -52,12 +52,22 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
         private var selectedPosition: Int = NO_SELECT
         private var listener: OnItemSelectedListener? = null
 
-        fun title(title: String) = apply { this.title = title }
-        fun items(items: List<SheetSelectionAdapter.Item>) = apply { this.items = items }
+        fun title(title: String) = apply {
+            this.title = title
+        }
 
         fun selectedPosition(position: Int) = apply {
             this.selectedPosition = position
         }
+
+        fun items(items: List<SheetSelectionAdapter.Item>) = apply {
+            this.items = items
+        }
+
+        fun <T> items(
+            source: List<T>,
+            mapper: (T) -> SheetSelectionAdapter.Item
+        ) = items(source.map { item -> mapper.invoke(item) })
 
         fun onItemClickListener(listener: OnItemSelectedListener) = apply {
             this.listener = listener

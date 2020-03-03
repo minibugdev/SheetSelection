@@ -1,8 +1,6 @@
 package com.minibugdev.sheetselection.demo
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.minibugdev.sheetselection.SheetSelection
 import com.minibugdev.sheetselection.SheetSelectionAdapter
@@ -16,19 +14,16 @@ class MainActivity : AppCompatActivity() {
 
         buttonShowSheetSelection.setOnClickListener {
 
-            val items = listOf(
-                SheetSelectionAdapter.Item("1", "Item #1", null),
-                SheetSelectionAdapter.Item("2", "Item #2", null),
-                SheetSelectionAdapter.Item("3", "Item #3", null),
-                SheetSelectionAdapter.Item("4", "Item #4", null)
-            )
-
+            val items = listOf("#1", "#2", "#3", "#4")
             SheetSelection.Builder(this)
                 .title("This is Title from Activity")
-                .items(items)
-                .selectedPosition(0)
-                .onItemClickListener { item, _ ->
-                    Toast.makeText(this@MainActivity, item.value, Toast.LENGTH_SHORT).show()
+                .items(
+                    source = items,
+                    mapper = { SheetSelectionAdapter.Item("key_$it", "Item $it", null) }
+                )
+                .selectedPosition(1)
+                .onItemClickListener { item, position ->
+                    textview.text = "You selected ${item.value}, At position $position."
                 }
                 .show()
         }
