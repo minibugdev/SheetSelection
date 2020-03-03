@@ -9,8 +9,11 @@
     <TextView
         android:id="@+id/textViewTitle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/ss_item_padding"
+        android:layout_height="?attr/sheetSelection_itemHeight"
+        android:gravity="center_vertical"
+        android:paddingStart="?attr/sheetSelection_itemPadding"
+        android:paddingEnd="?attr/sheetSelection_itemPadding"
+        android:textAppearance="?attr/sheetSelection_textAppearanceTitle"
         tools:text="@tools:sample/lorem" />
 
     <androidx.recyclerview.widget.RecyclerView

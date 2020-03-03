@@ -2,6 +2,7 @@ package com.minibugdev.sheetselection
 
 import android.content.Context
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,15 @@ import kotlinx.android.synthetic.main.dialog_sheet_selection.*
 class SheetSelection private constructor() : BottomSheetDialogFragment() {
 
     var onItemClickListener: OnItemSelectedListener? = null
+
+    override fun getTheme(): Int {
+        val outValue = TypedValue()
+        return if (requireContext().theme.resolveAttribute(R.attr.sheetSelectionTheme, outValue, true)) {
+            outValue.resourceId;
+        } else {
+            R.style.Theme_SheetSelection
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

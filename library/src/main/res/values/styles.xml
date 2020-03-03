@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.SheetSelection" parent="@style/Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="sheetSelection_textAppearanceTitle">
+            @style/TextAppearance.MaterialComponents.Headline6
+        </item>
+        <item name="sheetSelection_textAppearanceItem">
+            @style/TextAppearance.MaterialComponents.Body2
+        </item>
+        <item name="sheetSelection_itemPadding">@dimen/item_padding</item>
+        <item name="sheetSelection_itemHeight">@dimen/item_height</item>
+    </style>
+</resources>
