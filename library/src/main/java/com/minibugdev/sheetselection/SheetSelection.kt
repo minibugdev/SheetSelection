@@ -17,8 +17,9 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
     var onItemClickListener: OnItemSelectedListener? = null
 
     override fun getTheme(): Int {
+        val theme = requireContext().theme
         val outValue = TypedValue()
-        return if (requireContext().theme.resolveAttribute(R.attr.sheetSelectionTheme, outValue, true)) {
+        return if (theme.resolveAttribute(R.attr.sheetSelectionTheme, outValue, true)) {
             outValue.resourceId;
         } else {
             R.style.Theme_SheetSelection
@@ -36,6 +37,10 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let { args ->
+            if (args.getBoolean(ARGS_SHOW_DRAGGED_INDICATOR)) {
+                draggedIndicator.visibility = View.VISIBLE
+            }
+
             textViewTitle.text = args.getString(ARGS_TITLE)
             recyclerViewSelectionItems.adapter = SheetSelectionAdapter(
                 items = args.getParcelableArrayList(ARGS_ITEMS) ?: emptyList(),
@@ -60,6 +65,7 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
         private var title: String? = null
         private var items: List<SheetSelectionAdapter.Item> = emptyList()
         private var selectedPosition: Int = NO_SELECT
+        private var showDraggedIndicator: Boolean = false
         private var listener: OnItemSelectedListener? = null
 
         fun title(title: String) = apply {
@@ -79,6 +85,10 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
             mapper: (T) -> SheetSelectionAdapter.Item
         ) = items(source.map { item -> mapper.invoke(item) })
 
+        fun showDraggedIndicator(show: Boolean) = apply {
+            this.showDraggedIndicator = show
+        }
+
         fun onItemClickListener(listener: OnItemSelectedListener) = apply {
             this.listener = listener
         }
@@ -89,6 +99,7 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
                     putString(ARGS_TITLE, title)
                     putParcelableArrayList(ARGS_ITEMS, ArrayList(items))
                     putInt(ARGS_SELECTED_POSITION, selectedPosition)
+                    putBoolean(ARGS_SHOW_DRAGGED_INDICATOR, showDraggedIndicator)
                 }
             onItemClickListener = listener
         }
@@ -106,5 +117,6 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
         private const val ARGS_TITLE = "SheetSelection:ARGS_TITLE"
         private const val ARGS_ITEMS = "SheetSelection:ARGS_ITEMS"
         private const val ARGS_SELECTED_POSITION = "SheetSelection:ARGS_SELECTED_POSITION"
+        private const val ARGS_SHOW_DRAGGED_INDICATOR = "SheetSelection:ARGS_SHOW_DRAGGED_INDICATOR"
     }
 }

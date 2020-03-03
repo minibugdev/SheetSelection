@@ -4,7 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:theme="@style/Theme.SheetSelection">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/draggedIndicator"
+        android:layout_width="?attr/sheetSelection_indicatorWidth"
+        android:layout_height="?attr/sheetSelection_indicatorHeight"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="?attr/sheetSelection_indicatorMargin"
+        android:visibility="gone"
+        app:cardBackgroundColor="?attr/colorPrimary"
+        app:cardElevation="0dp"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/textViewTitle"

@@ -10,5 +10,8 @@
         </item>
         <item name="sheetSelection_itemPadding">@dimen/item_padding</item>
         <item name="sheetSelection_itemHeight">@dimen/item_height</item>
+        <item name="sheetSelection_indicatorWidth">@dimen/indicator_width</item>
+        <item name="sheetSelection_indicatorHeight">@dimen/indicator_height</item>
+        <item name="sheetSelection_indicatorMargin">@dimen/indicator_margin</item>
     </style>
 </resources>
