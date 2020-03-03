@@ -21,6 +21,7 @@
 
     <style name="Widget.Custom.SheetSelection.Item" parent="@style/Widget.SheetSelection.Item">
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Caption</item>
+        <item name="drawableTint">@color/colorPrimary</item>
     </style>
 
     <style name="Widget.Custom.SheetSelection.Indicator" parent="@style/Widget.SheetSelection.Indicator">

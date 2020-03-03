@@ -1,7 +1,25 @@
 # Sheet Selection
+[![](https://jitpack.io/v/minibugdev/SheetSelection.svg)](https://jitpack.io/#minibugdev/SheetSelection)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/minibugdev/DrawableBadge/master/LICENSE)
+
 `SheetSelection` is an Android library for display and selectable list items as [BottomSheetDialogFragment](https://developer.android.com/reference/com/google/android/material/bottomsheet/BottomSheetDialogFragment) .
 
 ![Sheet Selection](screenshot/component.png)
+
+## Installation
+Add it in your root build.gradle at the end of repositories:
+``` groovy
+repositories {
+    ...
+    maven { url 'https://jitpack.io' }
+}
+```
+Add the dependency
+``` groovy
+dependencies {
+    implementation 'com.github.minibugdev:SheetSelection:0.0.1'
+}
+```
 
 ## How to use
 ![Sheet Selection](screenshot/ss_1.png)
@@ -42,6 +60,7 @@ Add your theme and style to `styles.xml` or wherever your want.
 ``` xml
 <style name="Widget.Custom.SheetSelection.Item" parent="@style/Widget.SheetSelection.Item">
     <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Caption</item>
+    <item name="drawableTint">@color/colorPrimary</item>
 </style>
 ```
 
