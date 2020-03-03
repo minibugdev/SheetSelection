@@ -7,7 +7,7 @@
 ![Sheet Selection](screenshot/component.png)
 
 ## Installation
-Add it in your root build.gradle at the end of repositories:
+Add it in your **root** `build.gradle` at the end of repositories:
 ``` groovy
 repositories {
     ..
@@ -47,14 +47,14 @@ SheetSelection.Builder(context)
 - Set items by `Builder.items(List<SheetSelectionItem>)`.
 - Set selected item by `Builder.selectedPosition(Int)`. default is `SheetSelection.NO_SELECT`
 - Show dragged indicator by `Builder.showDraggedIndicator(Boolean)`. default is `false`
-- Handle on item click by `Builder.onItemClickListener()`.
 - Set custom theme by `Builder.theme(@StyleRes)`.
+- To handle the item click listener by `Builder.onItemClickListener()`.
 
 ## Customize your own style
 ![Sheet Selection](screenshot/ss_2.png)
 
 ### 1.Define your theme and style
-Add your theme and style to `styles.xml` or wherever your want.
+Add your theme and style to `styles.xml` or wherever you want.
 
 **1. Title** text style `parent` must be `Widget.SheetSelection.Title` eg.
 ``` xml
@@ -79,7 +79,7 @@ Add your theme and style to `styles.xml` or wherever your want.
 </style>
 ```
 
-Finally, override SheetSelection attributes by set your styles to **Theme** (`parent` must be `Theme.SheetSelection`)
+Finally, override SheetSelection attributes by setting your styles to your **Theme** (`parent` must be `Theme.SheetSelection`)
 ``` xml
 <!-- Customize SheetSelection theme -->
 <style name="Theme.Custom.SheetSelection" parent="@style/Theme.SheetSelection">
@@ -90,7 +90,7 @@ Finally, override SheetSelection attributes by set your styles to **Theme** (`pa
 </style>
 ```
 
-### 2. Apply theme to SheetSelection
+### 2. Apply your Theme to SheetSelection
 ``` kotlin
 SheetSelection.Builder(this)
     .theme(R.style.Theme_Custom_SheetSelection)
