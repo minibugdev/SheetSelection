@@ -2,16 +2,38 @@
 <resources>
 
     <style name="Theme.SheetSelection" parent="@style/Theme.MaterialComponents.Light.BottomSheetDialog">
-        <item name="sheetSelection_textAppearanceTitle">
-            @style/TextAppearance.MaterialComponents.Headline6
-        </item>
-        <item name="sheetSelection_textAppearanceItem">
-            @style/TextAppearance.MaterialComponents.Body2
-        </item>
-        <item name="sheetSelection_itemPadding">@dimen/item_padding</item>
-        <item name="sheetSelection_itemHeight">@dimen/item_height</item>
-        <item name="sheetSelection_indicatorWidth">@dimen/indicator_width</item>
-        <item name="sheetSelection_indicatorHeight">@dimen/indicator_height</item>
-        <item name="sheetSelection_indicatorMargin">@dimen/indicator_margin</item>
+        <item name="sheetSelection_titleStyle">@style/Widget.SheetSelection.Title</item>
+        <item name="sheetSelection_itemStyle">@style/Widget.SheetSelection.Item</item>
+        <item name="sheetSelection_indicatorStyle">@style/Widget.SheetSelection.Indicator</item>
+    </style>
+
+    <style name="Widget.SheetSelection.Title" parent="@style/Widget.MaterialComponents.TextView">
+        <item name="android:maxHeight">56dp</item>
+        <item name="android:minHeight">56dp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline6</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="Widget.SheetSelection.Item" parent="@style/Widget.MaterialComponents.TextView">
+        <item name="android:maxHeight">56dp</item>
+        <item name="android:minHeight">56dp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:drawablePadding">16dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body2</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="Widget.SheetSelection.Indicator" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="android:maxWidth">32dp</item>
+        <item name="android:minWidth">32dp</item>
+        <item name="android:maxHeight">4dp</item>
+        <item name="android:minHeight">4dp</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="cardBackgroundColor">?attr/colorPrimary</item>
+        <item name="cardElevation">0dp</item>
     </style>
 </resources>

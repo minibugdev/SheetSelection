@@ -3,12 +3,8 @@
 
     <declare-styleable name="SheetSelection">
         <attr name="sheetSelectionTheme" format="reference" />
-        <attr name="sheetSelection_textAppearanceTitle" format="reference" />
-        <attr name="sheetSelection_textAppearanceItem" format="reference" />
-        <attr name="sheetSelection_itemPadding" format="dimension" />
-        <attr name="sheetSelection_itemHeight" format="dimension" />
-        <attr name="sheetSelection_indicatorWidth" format="dimension" />
-        <attr name="sheetSelection_indicatorHeight" format="dimension" />
-        <attr name="sheetSelection_indicatorMargin" format="dimension" />
+        <attr name="sheetSelection_titleStyle" format="reference" />
+        <attr name="sheetSelection_itemStyle" format="reference" />
+        <attr name="sheetSelection_indicatorStyle" format="reference" />
     </declare-styleable>
 </resources>
