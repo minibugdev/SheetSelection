@@ -43,9 +43,9 @@ SheetSelection.Builder(context)
     .show()
 ```
 #### Configurations
-- Set title by `Builder.title(String)`. It will hide when set to `NULL` to **empty** string.
+- Set title by `Builder.title(String)`. It will hide when set to `NULL` or **empty** string.
 - Set items by `Builder.items(List<SheetSelectionItem>)`.
-- Set selected item by `Builder.selectedPosition(Int)`. default is `NO_SELECT`
+- Set selected item by `Builder.selectedPosition(Int)`. default is `SheetSelection.NO_SELECT`
 - Show dragged indicator by `Builder.showDraggedIndicator(Boolean)`. default is `false`
 - Handle on item click by `Builder.onItemClickListener()`.
 - Set custom theme by `Builder.theme(@StyleRes)`.
