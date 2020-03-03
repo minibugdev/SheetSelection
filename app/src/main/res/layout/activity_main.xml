@@ -15,8 +15,15 @@
         android:text="Hello World!" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonShowSheetSelection"
+        android:id="@+id/buttonDefaultSheetSelection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Show Sheet Selection" />
+        android:text="Default Sheet Selection" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonCustomSheetSelection"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Custom Sheet Selection" />
 </LinearLayout>

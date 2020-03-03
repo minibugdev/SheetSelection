@@ -12,18 +12,41 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        buttonShowSheetSelection.setOnClickListener {
+        buttonDefaultSheetSelection.setOnClickListener {
+            val items = listOf(
+                SheetSelectionAdapter.Item("1", "Default #1", null),
+                SheetSelectionAdapter.Item("2", "Default #2", null),
+                SheetSelectionAdapter.Item("3", "Default #3", null),
+                SheetSelectionAdapter.Item("4", "Default #4", null)
+            )
 
-            val items = listOf("#1", "#2", "#3", "#4")
             SheetSelection.Builder(this)
-                .title("This is Title from Activity")
-                .items(
-                    source = items,
-                    mapper = { SheetSelectionAdapter.Item("key_$it", "Item $it", null) }
-                )
-                .selectedPosition(1)
+                .title("Default Sheet Selection")
+                .items(items)
                 .onItemClickListener { item, position ->
-                    textview.text = "You selected ${item.value}, At position $position."
+                    textview.text = "You selected `${item.value}`, At position [$position]."
+                }
+                .show()
+        }
+
+        buttonCustomSheetSelection.setOnClickListener {
+            SheetSelection.Builder(this)
+                .title("Custom Sheet Selection")
+                .items(
+                    source = (0 until 99).map { "@$it" },
+                    mapper = {
+                        SheetSelectionAdapter.Item(
+                            key = "key_$it",
+                            value = "Custom $it",
+                            icon = R.drawable.ic_face
+                        )
+                    }
+                )
+                .selectedPosition(2)
+                .showDraggedIndicator(true)
+                .theme(R.style.Theme_Custom_SheetSelection)
+                .onItemClickListener { item, position ->
+                    textview.text = "You selected `${item.value}`, At position [$position]."
                 }
                 .show()
         }

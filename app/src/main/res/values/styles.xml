@@ -1,8 +1,28 @@
 <resources>
+
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- Customize SheetSelection theme -->
+    <style name="Theme.Custom.SheetSelection" parent="Theme.SheetSelection">
+        <item name="sheetSelection_titleStyle">@style/Widget.Custom.SheetSelection.Title</item>
+        <item name="sheetSelection_itemStyle">@style/Widget.Custom.SheetSelection.Item</item>
+        <item name="sheetSelection_indicatorStyle">@style/Widget.Custom.SheetSelection.Indicator</item>
+    </style>
+
+    <style name="Widget.Custom.SheetSelection.Title" parent="@style/Widget.SheetSelection.Title">
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Headline5</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="Widget.Custom.SheetSelection.Item" parent="@style/Widget.SheetSelection.Item">
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Caption</item>
+    </style>
+
+    <style name="Widget.Custom.SheetSelection.Indicator" parent="@style/Widget.SheetSelection.Indicator">
+        <item name="cardBackgroundColor">@color/colorAccent</item>
     </style>
 </resources>
