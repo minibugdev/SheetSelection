@@ -75,7 +75,7 @@ Add your theme and style to `styles.xml` or wherever your want.
 **3. Indicator** style `parent` must be `Widget.SheetSelection.Indicator` eg.
 ``` xml
 <style name="Widget.Custom.SheetSelection.Indicator" parent="@style/Widget.SheetSelection.Indicator">
-    <item name="android:layout_margin">16dp</item>
+    <item name="android:layout_marginTop">48dp</item>
 </style>
 ```
 
