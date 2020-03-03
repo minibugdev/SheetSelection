@@ -32,9 +32,5 @@ class MainActivity : AppCompatActivity() {
                 }
                 .show()
         }
-
-        buttonFragment.setOnClickListener {
-            startActivity(Intent(this, FragmentActivity::class.java))
-        }
     }
 }

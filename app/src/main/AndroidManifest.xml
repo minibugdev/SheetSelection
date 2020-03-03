@@ -18,10 +18,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.minibugdev.sheetselection.demo.FragmentActivity"
-            android:label="Sheet Selection - Fragment"
-            android:theme="@style/AppTheme.Fragment" />
     </application>
 
 </manifest>
