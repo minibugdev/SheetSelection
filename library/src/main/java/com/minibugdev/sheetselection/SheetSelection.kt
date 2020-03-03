@@ -57,7 +57,7 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
         @StyleRes
         private var themeId: Int = R.style.Theme_SheetSelection
         private var title: String? = null
-        private var items: List<SheetSelectionAdapter.Item> = emptyList()
+        private var items: List<SheetSelectionItem> = emptyList()
         private var selectedPosition: Int = NO_SELECT
         private var showDraggedIndicator: Boolean = false
         private var listener: OnItemSelectedListener? = null
@@ -74,13 +74,13 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
             this.selectedPosition = position
         }
 
-        fun items(items: List<SheetSelectionAdapter.Item>) = apply {
+        fun items(items: List<SheetSelectionItem>) = apply {
             this.items = items
         }
 
         fun <T> items(
             source: List<T>,
-            mapper: (T) -> SheetSelectionAdapter.Item
+            mapper: (T) -> SheetSelectionItem
         ) = items(source.map { item -> mapper.invoke(item) })
 
         fun showDraggedIndicator(show: Boolean) = apply {

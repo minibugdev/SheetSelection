@@ -1,19 +1,16 @@
 package com.minibugdev.sheetselection
 
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.parcel.Parcelize
 import kotlinx.android.synthetic.main.row_selection_item.*
 
-typealias OnItemSelectedListener = (item: SheetSelectionAdapter.Item, position: Int) -> Unit
+typealias OnItemSelectedListener = (item: SheetSelectionItem, position: Int) -> Unit
 
 class SheetSelectionAdapter(
-    private val items: List<Item>,
+    private val items: List<SheetSelectionItem>,
     private val selectedPosition: Int,
     private val onItemSelectedListener: OnItemSelectedListener?
 ) : RecyclerView.Adapter<SheetSelectionAdapter.ViewHolder>() {
@@ -41,7 +38,7 @@ class SheetSelectionAdapter(
         LayoutContainer {
 
         fun onBindView(
-            item: Item, position: Int, selected: Boolean,
+            item: SheetSelectionItem, position: Int, selected: Boolean,
             onItemSelectedListener: OnItemSelectedListener?
         ) {
             val selectedIcon = if (selected) R.drawable.ic_check else 0
@@ -53,11 +50,4 @@ class SheetSelectionAdapter(
             }
         }
     }
-
-    @Parcelize
-    data class Item(
-        val key: String,
-        val value: String,
-        @DrawableRes val icon: Int? = null
-    ) : Parcelable
 }

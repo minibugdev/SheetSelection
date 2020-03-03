@@ -7,10 +7,11 @@
     </style>
 
     <!-- Customize SheetSelection theme -->
-    <style name="Theme.Custom.SheetSelection" parent="Theme.SheetSelection">
+    <style name="Theme.Custom.SheetSelection" parent="@style/Theme.SheetSelection">
         <item name="sheetSelection_titleStyle">@style/Widget.Custom.SheetSelection.Title</item>
         <item name="sheetSelection_itemStyle">@style/Widget.Custom.SheetSelection.Item</item>
         <item name="sheetSelection_indicatorStyle">@style/Widget.Custom.SheetSelection.Indicator</item>
+        <item name="sheetSelection_indicatorColor">@color/colorAccent</item>
     </style>
 
     <style name="Widget.Custom.SheetSelection.Title" parent="@style/Widget.SheetSelection.Title">
@@ -23,6 +24,6 @@
     </style>
 
     <style name="Widget.Custom.SheetSelection.Indicator" parent="@style/Widget.SheetSelection.Indicator">
-        <item name="cardBackgroundColor">@color/colorAccent</item>
+        <item name="android:layout_margin">16dp</item>
     </style>
 </resources>

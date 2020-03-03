@@ -5,6 +5,7 @@
         <item name="sheetSelection_titleStyle">@style/Widget.SheetSelection.Title</item>
         <item name="sheetSelection_itemStyle">@style/Widget.SheetSelection.Item</item>
         <item name="sheetSelection_indicatorStyle">@style/Widget.SheetSelection.Indicator</item>
+        <item name="sheetSelection_indicatorColor">#cccccc</item>
     </style>
 
     <style name="Widget.SheetSelection.Title" parent="@style/Widget.MaterialComponents.TextView">
@@ -33,7 +34,7 @@
         <item name="android:minHeight">4dp</item>
         <item name="android:layout_margin">8dp</item>
         <item name="android:layout_gravity">center_horizontal</item>
-        <item name="cardBackgroundColor">?attr/colorPrimary</item>
+        <item name="cardBackgroundColor">?attr/sheetSelection_indicatorColor</item>
         <item name="cardElevation">0dp</item>
     </style>
 </resources>
