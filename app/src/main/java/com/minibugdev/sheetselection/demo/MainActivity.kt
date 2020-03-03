@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
             )
 
             SheetSelection.Builder(this)
-                .title("Sheet Selection")
                 .items(items)
                 .selectedPosition(2)
                 .showDraggedIndicator(true)

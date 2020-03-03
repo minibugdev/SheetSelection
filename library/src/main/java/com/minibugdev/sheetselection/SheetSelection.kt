@@ -33,7 +33,13 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
                 draggedIndicator.visibility = View.VISIBLE
             }
 
-            textViewTitle.text = args.getString(ARGS_TITLE)
+            val title = args.getString(ARGS_TITLE)
+            if (title.isNullOrEmpty()) {
+                textViewTitle.visibility = View.GONE
+            } else {
+                textViewTitle.text = title
+            }
+
             recyclerViewSelectionItems.adapter = SheetSelectionAdapter(
                 items = args.getParcelableArrayList(ARGS_ITEMS) ?: emptyList(),
                 selectedPosition = args.getInt(ARGS_SELECTED_POSITION, NO_SELECT),
@@ -66,7 +72,7 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
             this.themeId = themeId
         }
 
-        fun title(title: String) = apply {
+        fun title(title: String?) = apply {
             this.title = title
         }
 
