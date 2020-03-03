@@ -2,10 +2,10 @@ package com.minibugdev.sheetselection
 
 import android.content.Context
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StyleRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
@@ -16,15 +16,7 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
 
     var onItemClickListener: OnItemSelectedListener? = null
 
-    override fun getTheme(): Int {
-        val theme = requireContext().theme
-        val outValue = TypedValue()
-        return if (theme.resolveAttribute(R.attr.sheetSelectionTheme, outValue, true)) {
-            outValue.resourceId;
-        } else {
-            R.style.Theme_SheetSelection
-        }
-    }
+    override fun getTheme(): Int = arguments?.getInt(ARGS_THEME) ?: super.getTheme()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,11 +54,17 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
             else -> null
         }
 
+        @StyleRes
+        private var themeId: Int = R.style.Theme_SheetSelection
         private var title: String? = null
         private var items: List<SheetSelectionAdapter.Item> = emptyList()
         private var selectedPosition: Int = NO_SELECT
         private var showDraggedIndicator: Boolean = false
         private var listener: OnItemSelectedListener? = null
+
+        fun theme(@StyleRes themeId: Int) = apply {
+            this.themeId = themeId
+        }
 
         fun title(title: String) = apply {
             this.title = title
@@ -96,6 +94,7 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
         fun build() = SheetSelection().apply {
             arguments = Bundle()
                 .apply {
+                    putInt(ARGS_THEME, themeId)
                     putString(ARGS_TITLE, title)
                     putParcelableArrayList(ARGS_ITEMS, ArrayList(items))
                     putInt(ARGS_SELECTED_POSITION, selectedPosition)
@@ -114,6 +113,7 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
     companion object {
         const val NO_SELECT = -1
 
+        private const val ARGS_THEME = "SheetSelection:ARGS_THEME"
         private const val ARGS_TITLE = "SheetSelection:ARGS_TITLE"
         private const val ARGS_ITEMS = "SheetSelection:ARGS_ITEMS"
         private const val ARGS_SELECTED_POSITION = "SheetSelection:ARGS_SELECTED_POSITION"
