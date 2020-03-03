@@ -1,5 +1,5 @@
 # Sheet Selection
-[![](https://jitpack.io/v/minibugdev/SheetSelection.svg)](https://jitpack.io/#minibugdev/SheetSelection)
+[![](https://jitpack.io/v/minibugdev/sheetselection.svg)](https://jitpack.io/#minibugdev/SheetSelection)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/minibugdev/DrawableBadge/master/LICENSE)
 
 `SheetSelection` is an Android library for display and selectable list items as [BottomSheetDialogFragment](https://developer.android.com/reference/com/google/android/material/bottomsheet/BottomSheetDialogFragment) .
@@ -10,14 +10,14 @@
 Add it in your root build.gradle at the end of repositories:
 ``` groovy
 repositories {
-    ...
+    ..
     maven { url 'https://jitpack.io' }
 }
 ```
 Add the dependency
 ``` groovy
 dependencies {
-    implementation 'com.github.minibugdev:SheetSelection:0.0.1'
+    implementation 'com.github.minibugdev:sheetselection:0.0.1'
 }
 ```
 
@@ -94,8 +94,7 @@ Finally, override SheetSelection attributes by set your styles to **Theme** (`pa
 ``` kotlin
 SheetSelection.Builder(this)
     .theme(R.style.Theme_Custom_SheetSelection)
-    .
-    .
+    ..
     .show()
 ```
 
