@@ -10,10 +10,12 @@ import kotlinx.android.synthetic.main.row_selection_item.*
 typealias OnItemSelectedListener = (item: SheetSelectionItem, position: Int) -> Unit
 
 class SheetSelectionAdapter(
-    private val items: List<SheetSelectionItem>,
+    private val source: List<SheetSelectionItem>,
     private val selectedPosition: Int,
     private val onItemSelectedListener: OnItemSelectedListener?
 ) : RecyclerView.Adapter<SheetSelectionAdapter.ViewHolder>() {
+
+    private var items: List<SheetSelectionItem> = source
 
     override fun getItemCount() = items.size
 
@@ -27,11 +29,29 @@ class SheetSelectionAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.onBindView(
-            items[position],
-            position,
-            position == selectedPosition,
-            onItemSelectedListener
+            item = items[position],
+            position = position,
+            selected = position == selectedPosition,
+            onItemSelectedListener = onItemSelectedListener
         )
+    }
+
+    fun search(keyword: String?) {
+        if (keyword.isNullOrBlank()) {
+            updateItems(source)
+        } else {
+            val searchResult = source.filter { it.value.contains(keyword, true) }
+            if (searchResult.isEmpty()) {
+                updateItems(listOf(SheetSelectionItem("search_not_found", "Search not found.")))
+            } else {
+                updateItems(searchResult)
+            }
+        }
+    }
+
+    private fun updateItems(items: List<SheetSelectionItem>) {
+        this.items = items
+        notifyDataSetChanged()
     }
 
     class ViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),

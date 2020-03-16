@@ -17,12 +17,12 @@ repositories {
 Add the dependency
 ``` groovy
 dependencies {
-    implementation 'com.github.minibugdev:sheetselection:0.0.1'
+    implementation 'com.github.minibugdev:sheetselection:0.0.2'
 }
 ```
 
 ## How to use
-![Sheet Selection](screenshot/ss_1.png)
+![Sheet Selection](screenshot/ss_1_0.0.2.png)
 
 ``` kotlin
 val items = listOf(
@@ -37,6 +37,7 @@ SheetSelection.Builder(context)
     .items(items)
     .selectedPosition(2)
     .showDraggedIndicator(true)
+    .searchEnabled(true)
     .onItemClickListener { item, position -> 
         // DO SOMETHING
     }
@@ -47,6 +48,7 @@ SheetSelection.Builder(context)
 - Set items by `Builder.items(List<SheetSelectionItem>)`.
 - Set selected item by `Builder.selectedPosition(Int)`. default is `SheetSelection.NO_SELECT`
 - Show dragged indicator by `Builder.showDraggedIndicator(Boolean)`. default is `false`
+- Set search enabled by `Builder.searchEnabled(Boolean)`. default is `false`
 - Set custom theme by `Builder.theme(@StyleRes)`.
 - To handle the item click listener by `Builder.onItemClickListener()`.
 

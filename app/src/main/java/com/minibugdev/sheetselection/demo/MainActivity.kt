@@ -17,7 +17,9 @@ class MainActivity : AppCompatActivity() {
                 SheetSelectionItem("1", "Item #1", R.drawable.ic_extension),
                 SheetSelectionItem("2", "Item #2", R.drawable.ic_nature),
                 SheetSelectionItem("3", "Item #3", R.drawable.ic_fingerprint),
-                SheetSelectionItem("4", "Item #4", R.drawable.ic_face)
+                SheetSelectionItem("4", "Item #4", R.drawable.ic_face),
+                SheetSelectionItem("5", "Item #5", R.drawable.ic_extension),
+                SheetSelectionItem("6", "Item #6", R.drawable.ic_fingerprint)
             )
 
             SheetSelection.Builder(this)
@@ -25,6 +27,7 @@ class MainActivity : AppCompatActivity() {
                 .items(items)
                 .selectedPosition(2)
                 .showDraggedIndicator(true)
+                .searchEnabled(true)
                 .onItemClickListener { item, position ->
                     textview.text = "You selected `${item.value}`, At position [$position]."
                 }
@@ -46,6 +49,7 @@ class MainActivity : AppCompatActivity() {
                 )
                 .selectedPosition(2)
                 .showDraggedIndicator(true)
+                .searchEnabled(true)
                 .theme(R.style.Theme_Custom_SheetSelection)
                 .onItemClickListener { item, position ->
                     textview.text = "You selected `${item.value}`, At position [$position]."
