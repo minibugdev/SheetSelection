@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
                 .items(items)
                 .selectedPosition(2)
                 .showDraggedIndicator(true)
+                .searchEnabled(true)
                 .onItemClickListener { item, position ->
                     textview.text = "You selected `${item.value}`, At position [$position]."
                 }
@@ -46,6 +47,7 @@ class MainActivity : AppCompatActivity() {
                 )
                 .selectedPosition(2)
                 .showDraggedIndicator(true)
+                .searchEnabled(true)
                 .theme(R.style.Theme_Custom_SheetSelection)
                 .onItemClickListener { item, position ->
                     textview.text = "You selected `${item.value}`, At position [$position]."

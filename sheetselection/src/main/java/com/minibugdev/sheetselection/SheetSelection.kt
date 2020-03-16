@@ -6,15 +6,36 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StyleRes
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.dialog_sheet_selection.*
 
 class SheetSelection private constructor() : BottomSheetDialogFragment() {
 
     var onItemClickListener: OnItemSelectedListener? = null
+
+    private val adapter by lazy {
+        SheetSelectionAdapter(
+            source = arguments?.getParcelableArrayList(ARGS_ITEMS) ?: emptyList(),
+            selectedPosition = arguments?.getInt(ARGS_SELECTED_POSITION, NO_SELECT) ?: NO_SELECT,
+            onItemSelectedListener = onItemSelectedListener
+        )
+    }
+
+    private val screenHeight by lazy {
+        val statusBarHeight = try {
+            val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+            resources.getDimensionPixelSize(resourceId)
+        } catch (e: Exception) {
+            0
+        }
+        resources.displayMetrics.heightPixels - statusBarHeight
+    }
 
     override fun getTheme(): Int = arguments?.getInt(ARGS_THEME) ?: super.getTheme()
 
@@ -36,21 +57,59 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
             val title = args.getString(ARGS_TITLE)
             if (title.isNullOrEmpty()) {
                 textViewTitle.visibility = View.GONE
+                textViewTitle.text = null
             } else {
+                textViewTitle.visibility = View.VISIBLE
                 textViewTitle.text = title
             }
 
-            recyclerViewSelectionItems.adapter = SheetSelectionAdapter(
-                items = args.getParcelableArrayList(ARGS_ITEMS) ?: emptyList(),
-                selectedPosition = args.getInt(ARGS_SELECTED_POSITION, NO_SELECT),
-                onItemSelectedListener = internalOnItemSelectedListener
-            )
+            if (args.getBoolean(ARGS_SEARCH_ENABLED)) {
+                buttonSearch.visibility = View.VISIBLE
+                buttonSearch.setOnClickListener(onSearchClickListener)
+                searchView.setOnCloseListener(onSearchCloseListener)
+                searchView.setOnQueryTextListener(onSearchQueryTextListener)
+            }
+
+            recyclerViewSelectionItems.setHasFixedSize(true)
+            recyclerViewSelectionItems.adapter = adapter
         }
     }
 
-    private val internalOnItemSelectedListener: OnItemSelectedListener = { item, position ->
+    private fun updateSheetHeight(viewHeight: Int) {
+        rootLayout.layoutParams = rootLayout.layoutParams
+            .apply { height = viewHeight }
+    }
+
+    private val onItemSelectedListener: OnItemSelectedListener = { item, position ->
         dismiss()
         onItemClickListener?.invoke(item, position)
+    }
+
+    private val onSearchClickListener = View.OnClickListener {
+        (dialog as? BottomSheetDialog)?.run {
+            behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }
+        updateSheetHeight(screenHeight)
+        viewSwitcherHeader.displayedChild = 1
+        searchView.isIconified = false
+    }
+
+    private val onSearchCloseListener = SearchView.OnCloseListener {
+        updateSheetHeight(ViewGroup.LayoutParams.WRAP_CONTENT)
+        viewSwitcherHeader.displayedChild = 0
+        true
+    }
+
+    private val onSearchQueryTextListener = object : SearchView.OnQueryTextListener {
+        override fun onQueryTextChange(newText: String?): Boolean {
+            adapter.search(newText)
+            return true
+        }
+
+        override fun onQueryTextSubmit(query: String?): Boolean {
+            adapter.search(query)
+            return true
+        }
     }
 
     class Builder(context: Context) {
@@ -66,6 +125,7 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
         private var items: List<SheetSelectionItem> = emptyList()
         private var selectedPosition: Int = NO_SELECT
         private var showDraggedIndicator: Boolean = false
+        private var searchEnabled: Boolean = false
         private var listener: OnItemSelectedListener? = null
 
         fun theme(@StyleRes themeId: Int) = apply {
@@ -93,6 +153,10 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
             this.showDraggedIndicator = show
         }
 
+        fun searchEnabled(enabled: Boolean) = apply {
+            this.searchEnabled = enabled
+        }
+
         fun onItemClickListener(listener: OnItemSelectedListener) = apply {
             this.listener = listener
         }
@@ -105,6 +169,7 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
                     putParcelableArrayList(ARGS_ITEMS, ArrayList(items))
                     putInt(ARGS_SELECTED_POSITION, selectedPosition)
                     putBoolean(ARGS_SHOW_DRAGGED_INDICATOR, showDraggedIndicator)
+                    putBoolean(ARGS_SEARCH_ENABLED, searchEnabled)
                 }
             onItemClickListener = listener
         }
@@ -124,5 +189,6 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
         private const val ARGS_ITEMS = "SheetSelection:ARGS_ITEMS"
         private const val ARGS_SELECTED_POSITION = "SheetSelection:ARGS_SELECTED_POSITION"
         private const val ARGS_SHOW_DRAGGED_INDICATOR = "SheetSelection:ARGS_SHOW_DRAGGED_INDICATOR"
+        private const val ARGS_SEARCH_ENABLED = "SheetSelection:ARGS_SEARCH_ENABLED"
     }
 }
