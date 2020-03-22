@@ -1,5 +1,6 @@
 # Sheet Selection
-[![](https://jitpack.io/v/minibugdev/sheetselection.svg)](https://jitpack.io/#minibugdev/SheetSelection)
+[![Jitpack SheetSelection](https://jitpack.io/v/minibugdev/sheetselection.svg)](https://jitpack.io/#minibugdev/SheetSelection)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SheetSelection-orange.svg?style=flat)](https://android-arsenal.com/details/1/8051)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/minibugdev/DrawableBadge/master/LICENSE)
 
 `SheetSelection` is an Android library for display list and be able to select the item as a [BottomSheet](https://developer.android.com/reference/com/google/android/material/bottomsheet/BottomSheetDialogFragment).
