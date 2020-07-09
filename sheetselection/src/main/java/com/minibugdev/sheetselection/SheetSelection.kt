@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import androidx.annotation.StyleRes
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -23,6 +24,7 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
         SheetSelectionAdapter(
             source = arguments?.getParcelableArrayList(ARGS_ITEMS) ?: emptyList(),
             selectedPosition = arguments?.getInt(ARGS_SELECTED_POSITION, NO_SELECT) ?: NO_SELECT,
+            searchNotFoundText = arguments?.getString(ARGS_SEARCH_NOT_FOUND_TEXT) ?: "Search not found.",
             onItemSelectedListener = onItemSelectedListener
         )
     }
@@ -112,7 +114,7 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
         }
     }
 
-    class Builder(context: Context) {
+    class Builder(private val context: Context) {
         private val manager: FragmentManager? = when (context) {
             is FragmentActivity -> context.supportFragmentManager
             is Fragment -> context.requireFragmentManager()
@@ -126,6 +128,7 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
         private var selectedPosition: Int = NO_SELECT
         private var showDraggedIndicator: Boolean = false
         private var searchEnabled: Boolean = false
+        private var searchNotFoundText: String? = null
         private var listener: OnItemSelectedListener? = null
 
         fun theme(@StyleRes themeId: Int) = apply {
@@ -157,6 +160,14 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
             this.searchEnabled = enabled
         }
 
+        fun searchNotFoundText(text: String) = apply {
+            this.searchNotFoundText = text
+        }
+
+        fun searchNotFoundText(@StringRes textResId: Int) = apply {
+            this.searchNotFoundText = context.getString(textResId)
+        }
+
         fun onItemClickListener(listener: OnItemSelectedListener) = apply {
             this.listener = listener
         }
@@ -170,6 +181,7 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
                     putInt(ARGS_SELECTED_POSITION, selectedPosition)
                     putBoolean(ARGS_SHOW_DRAGGED_INDICATOR, showDraggedIndicator)
                     putBoolean(ARGS_SEARCH_ENABLED, searchEnabled)
+                    putString(ARGS_SEARCH_NOT_FOUND_TEXT, searchNotFoundText)
                 }
             onItemClickListener = listener
         }
@@ -187,6 +199,7 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
         private const val ARGS_THEME = "SheetSelection:ARGS_THEME"
         private const val ARGS_TITLE = "SheetSelection:ARGS_TITLE"
         private const val ARGS_ITEMS = "SheetSelection:ARGS_ITEMS"
+        private const val ARGS_SEARCH_NOT_FOUND_TEXT = "SheetSelection:ARGS_SEARCH_NOT_FOUND_TEXT"
         private const val ARGS_SELECTED_POSITION = "SheetSelection:ARGS_SELECTED_POSITION"
         private const val ARGS_SHOW_DRAGGED_INDICATOR = "SheetSelection:ARGS_SHOW_DRAGGED_INDICATOR"
         private const val ARGS_SEARCH_ENABLED = "SheetSelection:ARGS_SEARCH_ENABLED"
