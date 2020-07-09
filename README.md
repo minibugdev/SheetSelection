@@ -18,7 +18,7 @@ repositories {
 Add the dependency
 ``` groovy
 dependencies {
-    implementation 'com.github.minibugdev:sheetselection:0.0.2'
+    implementation 'com.github.minibugdev:sheetselection:0.0.3'
 }
 ```
 
