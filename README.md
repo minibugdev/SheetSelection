@@ -18,7 +18,7 @@ repositories {
 Add the dependency
 ``` groovy
 dependencies {
-    implementation 'com.github.minibugdev:sheetselection:0.0.2'
+    implementation 'com.github.minibugdev:sheetselection:0.0.3'
 }
 ```
 
@@ -39,6 +39,7 @@ SheetSelection.Builder(context)
     .selectedPosition(2)
     .showDraggedIndicator(true)
     .searchEnabled(true)
+    .searchNotFoundText("Nothing!!")
     .onItemClickListener { item, position -> 
         // DO SOMETHING
     }
@@ -50,6 +51,7 @@ SheetSelection.Builder(context)
 - Set selected item by `Builder.selectedPosition(Int)`. default is `SheetSelection.NO_SELECT`
 - Show dragged indicator by `Builder.showDraggedIndicator(Boolean)`. default is `false`
 - Set search enabled by `Builder.searchEnabled(Boolean)`. default is `false`
+- Set search not found text by `Builder.searchNotFoundText(String)`. default is `Search not found.`
 - Set custom theme by `Builder.theme(@StyleRes)`.
 - To handle the item click listener by `Builder.onItemClickListener()`.
 

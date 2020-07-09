@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
                 .selectedPosition(2)
                 .showDraggedIndicator(true)
                 .searchEnabled(true)
+                .searchNotFoundText("Nothing!!")
                 .theme(R.style.Theme_Custom_SheetSelection)
                 .onItemClickListener { item, position ->
                     textview.text = "You selected `${item.value}`, At position [$position]."
