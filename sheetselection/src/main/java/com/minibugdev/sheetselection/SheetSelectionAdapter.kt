@@ -11,7 +11,6 @@ typealias OnItemSelectedListener = (item: SheetSelectionItem, position: Int) -> 
 
 class SheetSelectionAdapter(
     private val source: List<SheetSelectionItem>,
-    private val selectedPosition: Int,
     private val searchNotFoundText: String,
     private val onItemSelectedListener: OnItemSelectedListener?
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -40,7 +39,6 @@ class SheetSelectionAdapter(
             holder.onBindView(
                 item = items[position],
                 position = position,
-                selected = position == selectedPosition,
                 onItemSelectedListener = onItemSelectedListener
             )
         }
@@ -73,13 +71,10 @@ class SheetSelectionAdapter(
         fun onBindView(
             item: SheetSelectionItem,
             position: Int,
-            selected: Boolean,
             onItemSelectedListener: OnItemSelectedListener?
         ) {
-            val selectedIcon = if (selected) R.drawable.ic_check else 0
-            textViewItem.setCompoundDrawablesWithIntrinsicBounds(item.icon ?: 0, 0, selectedIcon, 0)
+            textViewItem.setCompoundDrawablesWithIntrinsicBounds(item.icon ?: 0, 0, if(item.isChecked) R.drawable.ic_check else 0 , 0)
             textViewItem.text = item.value
-
             textViewItem.setOnClickListener {
                 onItemSelectedListener?.invoke(item, position)
             }

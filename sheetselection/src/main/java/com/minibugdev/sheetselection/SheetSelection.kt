@@ -2,9 +2,11 @@ package com.minibugdev.sheetselection
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.annotation.StyleRes
 import androidx.appcompat.widget.SearchView
@@ -16,14 +18,28 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.dialog_sheet_selection.*
 
-class SheetSelection private constructor() : BottomSheetDialogFragment() {
+typealias OnCompleteListener = (ArrayList<SheetSelectionItem>) -> Unit
 
-    var onItemClickListener: OnItemSelectedListener? = null
+class SheetSelection private constructor() : BottomSheetDialogFragment() {
+    private var onMultipleItemClickListener: OnCompleteListener? = null
+    private var previousList: List<SheetSelectionItem> = emptyList()
+    private var selectedItemsList : ArrayList<SheetSelectionItem> = ArrayList()
+    private val maxItemsChooseCount: Int by lazy {
+        arguments?.getInt(ARGS_MAX_ITEM_CHOOSE_COUNT) ?: Int.MAX_VALUE
+    }
+    private val maxItemsChooseCountMsg: String? by lazy {
+        arguments?.getString(ARGS_MAX_ITEM_CHOOSE_MESSAGE)
+    }
+
 
     private val adapter by lazy {
+         previousList = arguments?.getParcelableArrayList(ARGS_ITEMS) ?: emptyList()
+        for (sheetSelectionItem in previousList) {
+            if(sheetSelectionItem.isChecked)
+                selectedItemsList.add(sheetSelectionItem)
+        }
         SheetSelectionAdapter(
-            source = arguments?.getParcelableArrayList(ARGS_ITEMS) ?: emptyList(),
-            selectedPosition = arguments?.getInt(ARGS_SELECTED_POSITION, NO_SELECT) ?: NO_SELECT,
+            source = previousList,
             searchNotFoundText = arguments?.getString(ARGS_SEARCH_NOT_FOUND_TEXT) ?: "Search not found.",
             onItemSelectedListener = onItemSelectedListener
         )
@@ -75,6 +91,11 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
             recyclerViewSelectionItems.setHasFixedSize(true)
             recyclerViewSelectionItems.adapter = adapter
         }
+
+        doneButton.setOnClickListener{
+            dismiss()
+            onMultipleItemClickListener?.invoke(selectedItemsList)
+        }
     }
 
     private fun updateSheetHeight(viewHeight: Int) {
@@ -83,8 +104,33 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
     }
 
     private val onItemSelectedListener: OnItemSelectedListener = { item, position ->
-        dismiss()
-        onItemClickListener?.invoke(item, position)
+        if(arguments?.getBoolean(ARGS_FOR_MULTIPLE_SELECTION, false) == true){
+            if(previousList.isNotEmpty()){
+                val clickedItemInList = previousList.first { listItem -> listItem == item }
+                if(selectedItemsList.contains(clickedItemInList)){
+                    selectedItemsList.remove(clickedItemInList)
+                    clickedItemInList.isChecked = false
+                    adapter.notifyItemChanged(position)
+                } else {
+                    if(selectedItemsList.size < maxItemsChooseCount){
+                        selectedItemsList.add(clickedItemInList)
+                        clickedItemInList.isChecked = true
+                        adapter.notifyItemChanged(position)
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            if(maxItemsChooseCountMsg.isNullOrEmpty()) "Cannot choose more than $maxItemsChooseCount items" else maxItemsChooseCountMsg,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        } else {
+            dismiss()
+            selectedItemsList.clear()
+            selectedItemsList.add(item)
+            onMultipleItemClickListener?.invoke(selectedItemsList)
+        }
     }
 
     private val onSearchClickListener = View.OnClickListener {
@@ -125,11 +171,13 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
         private var themeId: Int = R.style.Theme_SheetSelection
         private var title: String? = null
         private var items: List<SheetSelectionItem> = emptyList()
-        private var selectedPosition: Int = NO_SELECT
         private var showDraggedIndicator: Boolean = false
         private var searchEnabled: Boolean = false
+        private var forMultipleSelection: Boolean = false
+        private var maxItemChooseCount: Int = 0
+        private var maxItemChooseMessage: String? = null
         private var searchNotFoundText: String? = null
-        private var listener: OnItemSelectedListener? = null
+        private var listener: OnCompleteListener? = null
 
         fun theme(@StyleRes themeId: Int) = apply {
             this.themeId = themeId
@@ -137,10 +185,6 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
 
         fun title(title: String?) = apply {
             this.title = title
-        }
-
-        fun selectedPosition(position: Int) = apply {
-            this.selectedPosition = position
         }
 
         fun items(items: List<SheetSelectionItem>) = apply {
@@ -164,11 +208,20 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
             this.searchNotFoundText = text
         }
 
+        fun forMultipleSelection(enabled: Boolean) = apply {
+            this.forMultipleSelection = enabled
+        }
+
+        fun maxItemChooseCount(count: Int, message : String? = null) = apply {
+            this.maxItemChooseCount = count
+            this.maxItemChooseMessage = message
+        }
+
         fun searchNotFoundText(@StringRes textResId: Int) = apply {
             this.searchNotFoundText = context.getString(textResId)
         }
 
-        fun onItemClickListener(listener: OnItemSelectedListener) = apply {
+        fun onCompleteListener(listener: OnCompleteListener) = apply {
             this.listener = listener
         }
 
@@ -176,14 +229,16 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
             arguments = Bundle()
                 .apply {
                     putInt(ARGS_THEME, themeId)
+                    putInt(ARGS_MAX_ITEM_CHOOSE_COUNT, maxItemChooseCount)
+                    putString(ARGS_MAX_ITEM_CHOOSE_MESSAGE, maxItemChooseMessage)
                     putString(ARGS_TITLE, title)
                     putParcelableArrayList(ARGS_ITEMS, ArrayList(items))
-                    putInt(ARGS_SELECTED_POSITION, selectedPosition)
                     putBoolean(ARGS_SHOW_DRAGGED_INDICATOR, showDraggedIndicator)
                     putBoolean(ARGS_SEARCH_ENABLED, searchEnabled)
+                    putBoolean(ARGS_FOR_MULTIPLE_SELECTION, forMultipleSelection)
                     putString(ARGS_SEARCH_NOT_FOUND_TEXT, searchNotFoundText)
                 }
-            onItemClickListener = listener
+            onMultipleItemClickListener = listener
         }
 
         fun show() {
@@ -194,14 +249,16 @@ class SheetSelection private constructor() : BottomSheetDialogFragment() {
     }
 
     companion object {
+        private const val TAG = "SheetSelection"
         const val NO_SELECT = -1
-
         private const val ARGS_THEME = "SheetSelection:ARGS_THEME"
         private const val ARGS_TITLE = "SheetSelection:ARGS_TITLE"
         private const val ARGS_ITEMS = "SheetSelection:ARGS_ITEMS"
         private const val ARGS_SEARCH_NOT_FOUND_TEXT = "SheetSelection:ARGS_SEARCH_NOT_FOUND_TEXT"
-        private const val ARGS_SELECTED_POSITION = "SheetSelection:ARGS_SELECTED_POSITION"
         private const val ARGS_SHOW_DRAGGED_INDICATOR = "SheetSelection:ARGS_SHOW_DRAGGED_INDICATOR"
         private const val ARGS_SEARCH_ENABLED = "SheetSelection:ARGS_SEARCH_ENABLED"
+        private const val ARGS_FOR_MULTIPLE_SELECTION = "SheetSelection:ARGS_FOR_MULTIPLE_SELECTION"
+        private const val ARGS_MAX_ITEM_CHOOSE_COUNT = "SheetSelection:ARGS_MAX_ITEM_CHOOSE_COUNT"
+        private const val ARGS_MAX_ITEM_CHOOSE_MESSAGE = "SheetSelection:ARGS_MAX_ITEM_CHOOSE_MESSAGE"
     }
 }

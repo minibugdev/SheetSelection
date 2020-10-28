@@ -8,5 +8,6 @@ import kotlinx.android.parcel.Parcelize
 data class SheetSelectionItem(
     val key: String,
     val value: String,
+    var isChecked: Boolean = false,
     @DrawableRes val icon: Int? = null
 ) : Parcelable
